@@ -1,0 +1,211 @@
+<head> 
+<title>吳昇倫與張嘉峻做的圈圈叉叉</title>
+  
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+  
+<style>
+*{
+  font-family:蘋方體,微軟正黑體;
+	margin:0px auto;
+
+}
+body{
+  width:480px;
+	margin:0px auto;
+}
+.card{
+  height:100%;
+  width:100%;
+  padding:20px;
+}
+
+#root{
+  weith:300px;
+  padding:5px;
+  border-width:2px;
+  border-style:solid;
+}
+.line{
+  padding:10px;
+  width:120px;
+  height:120px;
+  display:inline-block;
+  border-width:2px;
+  border-style:solid;
+  float:left;
+}
+.center{
+  margin-left:190px;
+}
+.box{
+  height:380px;
+  width:380px;
+	text-align:center;
+}
+.textbox{
+	text-align:center;
+}
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no" >
+  <div id="root">
+  <h1>{{title}}</h1>
+  <h3>{{subtitle}}</h3>
+  <div class="box">
+    <div class="line" v-for="(col, index) in cols" @click="statusChange(index)">
+      <div class="card" v-if="col.status==-1" :style="rect"> </div>
+      <div class="card" v-if="col.status==-1" :style="rect2"></div>
+      <div class="card" v-if="col.status==1" :style="circle"> </div>
+      <div class="card" v-if="col.status==1" :style="circle2"></div>
+    </div>
+  </div>
+  <div class="textbox">
+    <h1 v-if="turn==1">Turn : O</h1>
+    <h1 v-if="turn==-1">Turn : X</h1>
+    <h1 v-if="turn==0">{{wintext}}</h1>
+  </div>
+  <button class="btn btn-primary center" @click="reset">restart</button>
+</div>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js'></script>
+      <script id="rendered-js" >
+var vm = new Vue({
+  el: '#root',
+  data: {
+    title: '你各位的童年小遊戲',
+    subtitle: "圈圈叉叉",
+    turn: "1",
+    wintext: "",
+    circle: {
+      position: "absolute",
+      height: "100px",
+      width: "100px",
+      borderRadius: "50px",
+      borderWidth: "2px",
+      backgroundColor: "black" },
+
+    circle2: {
+      margin: "20px",
+      position: "absolute",
+      height: "60px",
+      width: "60px",
+      borderRadius: "50px",
+      borderWidth: "2px",
+      backgroundColor: "white" },
+
+    rect: {
+      marginLeft: "30px",
+      position: "absolute",
+      height: "100px",
+      width: "10px",
+      backgroundColor: "black",
+      transform: "rotate(45deg)",
+      zIndex: "1" },
+
+    rect2: {
+      marginLeft: "30px",
+      position: "absolute",
+      height: "100px",
+      width: "10px",
+      backgroundColor: "black",
+      transform: "rotate(135deg)" },
+
+    cols: [
+    {
+      position: '1',
+      status: 0 },
+
+    {
+      position: "2",
+      status: 0 },
+
+    {
+      position: "3",
+      status: 0 },
+
+    {
+      position: "4",
+      status: 0 },
+
+    {
+      position: "5",
+      status: 0 },
+
+    {
+      position: "6",
+      status: 0 },
+
+    {
+      position: "7",
+      status: 0 },
+
+    {
+      position: "8",
+      status: 0 },
+
+    {
+      position: "9",
+      status: 0 }] },
+
+
+
+
+  methods: {
+    statusChange(index) {
+      if (this.cols[index].status == 0) {
+        if (vm.turn == 1) {
+          this.cols[index].status = vm.turn;
+        } else
+        if (vm.turn == -1) {
+          this.cols[index].status = vm.turn;
+        }
+        vm.turn = vm.turn * -1;
+      }
+      this.winnerGose();
+    },
+    reset() {
+      this.cols.forEach(val => {
+        val.status = 0;
+      });
+      this.turn = 1;
+    },
+    winnerGose() {
+      var wincase = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+      var win = wincase.forEach(val => {
+        var count = val.reduce((t, o) => {
+          return t + parseInt(this.cols[o].status);
+        }, 0);
+        if (count == 3) {
+          this.turn = 0;
+          this.wintext = "O win";
+        } else
+        if (count == -3) {
+          this.turn = 0;
+          this.wintext = "X win";
+        }
+      });
+    } } });
+    </script>
+
+  
+
+</body>
+
+</html>
